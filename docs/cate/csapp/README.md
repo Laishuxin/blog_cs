@@ -15,3 +15,4 @@ sticky: true
 ### Chapter2: Representing and Manipulating Information
 
 - [Information Storage](./2_1-information-storage.md)
+- [Integer Representations](./2_2-integer-representations.md)

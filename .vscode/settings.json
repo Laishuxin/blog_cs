@@ -1,3 +1,7 @@
 {
-  "liveServer.settings.multiRootWorkspaceName": "learning-comprehension"
+  "liveServer.settings.multiRootWorkspaceName": "learning-comprehension",
+  "C_Cpp_Runner.cCompilerPath": "E:\\minGW\\mingw64\\bin\\gcc.exe",
+  "C_Cpp_Runner.cppCompilerPath": "E:\\minGW\\mingw64\\bin\\g++.exe",
+  "C_Cpp_Runner.debuggerPath": "E:\\minGW\\mingw64\\bin\\gdb.exe",
+  "C_Cpp_Runner.makePath": "E:\\minGW\\mingw64\\bin\\mingw32-make.exe"
 }
