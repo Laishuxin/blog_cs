@@ -2,9 +2,14 @@ const { getFileNames, getFileNamesByGroups } = require('./utils')
 const { resolve } = require('path')
 const basePath = resolve(__dirname, '../../')
 
+const cate = ['csapp', 'design-patterns']
+const getSidebarName = (name) => `/cate/${name}/`
+
+
 const sidebar = {
-  '/cate/csapp/': getCsapp('Part I: Program Structure and Execution'),
-  '/cate/': ['csapp']
+  [getSidebarName('csapp')]: getCsapp('Part I: Program Structure and Execution'),
+  [getSidebarName('design-patterns')]: getDesignPatterns(),
+  '/cate/': cate
 }
 
 function getCsapp(...groups) {
@@ -17,5 +22,10 @@ function getCsapp(...groups) {
       children: group[item]
     }
   })
+}
+
+function getDesignPatterns() {
+  const path = resolve(basePath, './cate/design-patterns')
+  return getFileNames(path)
 }
 module.exports = sidebar
