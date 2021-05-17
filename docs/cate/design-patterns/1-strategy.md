@@ -11,6 +11,7 @@ article: true
 sticky: false
 ---
 
+<div align="center"><img src="./images/design-pattern.jpg" /></div>
 ## 引例
 
 我们有两个配置对象（`config1`, `config2`），现在的需求是我们需要两个对象进行合并。对于对象中的不同字段，我们要求合并方式不一样。
@@ -166,7 +167,7 @@ const deepMergeStrategy: Strategy = (value1: any, value2: any): any => {
 }
 ```
 
-## 总结
+## 小结
 
 策略模式提供了一种灵活的应用，利用多态实现获取不同策略，根据不同策略得到不同的结果。
 在前端 axios 中，合并配置就是采用策略模式实现的。

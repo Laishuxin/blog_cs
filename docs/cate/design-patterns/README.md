@@ -15,5 +15,5 @@ sticky: true
 
 - [ 设计原则 ](0-principles.md)
 - [ 策略模式 ](./1-strategy.md)
-
-
+- [ 观察者模式 ](./2-observer.md)
+- 
