@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设计模式 - 工厂模式</title>
+  <style>
+    .modal {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 500px;
+      height: 500px;
+
+      margin: -250px 0 0 -250px;
+      border: 1px solid #000;
+      box-shadow: 1px 3px 5px #999;
+    }
+    
+    .modal header {
+      height: 50px;
+      padding: 0 15px;
+      line-height: 50px;
+      font-size: 20px;
+      color: #fff;
+      background-color: #cecece;
+      box-sizing: border-box;
+    }
+    
+    .modal.success header {
+      background: green;
+    }
+    
+    .modal.warning header {
+      background: orange;
+    }
+    
+    .modal.error header {
+      background: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>实现不同状态的模态框</h1>
+  
+  <div class="modal">
+    <header>modal</header>
+  </div>
+  
+  <div class="btn-group">
+    <button data-status="S">成功</button>
+    <button data-status="W">告警</button>
+    <button data-status="E">错误</button>
+  </div>
+  
+  <!-- <script src="./regular.js" type="module"></script> -->
+  <script src="./index.js" type="module"></script>
+</body>
+</html>
