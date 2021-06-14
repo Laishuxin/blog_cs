@@ -10,190 +10,214 @@ article: true
 sticky: false
 ---
 
-## 面向接口
+设计模式的七大设计原则：
 
-> 面向接口编程，而不是针对实现编程。
+1. 单一职责原则
+2. 接口隔离原则
+3. 依赖倒置原则
+4. 里氏替换原则
+5. 开放封闭原则（OCP）
+6. 迪米特法则
+7. 合成复用原则
 
-面向接口编程的好处在于：
+## 单一职责原则
 
-- 我们在使用时，只需要知道接口提供的方法的用途，而不需要知道接口的具体实现。
-- 可以实现接口复用。
+对于类而言，单一职责要求一个类只负责一项职责。
+如果类 A 负责两个不同的职责，如：职责 1 和职责 2。
+当职责 1 需求改变时改变类 A，可能会造成职责 2 执行错误，
+这种情况下就违法了单一职责原则。
+所以我们需要把类 A 的分解为 A1， A2，分别负责不同的职责。
 
-### 代码实现
+对于函数也类似。
 
+### introduction
+
+上面的说法可能有些抽象，让我们从具体的例子中体验一下这一原则。
+
+需求：
+
+1. 我们使用不同的交通工具出行。
+2. 需要有时间限制。
+
+### implementation
+
+#### tradition
+
+我们先来实现第一个功能：
 ```typescript
-interface FlyBehavior {
-  fly(): void
-}
+class Vehicle {
+  public type: string;
 
-class FlyWithWings implements FlyBehavior {
-  fly() {
-    console.log('实现飞行行为...')
+  constructor(type: string) {
+    this.type = type;
   }
-}
 
-class FlyNoWay implements FlyBehavior {
-  fly() {
-    console.log('飞不起来...')
+  operate() {
+    console.log(`${this.type} is running...`);
   }
 }
 ```
 
-在上面的例子中，我们定义了一个飞的行为（FlyBehavior）的接口，在实际的生产中，我们可以根据不同的需要实现这个接口。
 
-## 变与不变
+从上面的例子上看，我们实现一个交通工具类 (`Vehicle`)，让
+它执行一个 `operate` 方法，来现象出行。
 
-> 把不变的部分抽象到基类中，把变化的部分“封装”（独立）起来，好让其他部分不受影响。
-
-例如：对于一只鸭子，我们知道它会游泳（swim），而且我们还想展示（display）这只鸭子。但是，并非所有的鸭子都会飞（fly），也并非所有的鸭子都会呱呱叫（quack）。于是，我们可以把游泳（swim）和展示（display）存放在公共类中，把飞（fly）和呱呱叫（quack）抽离出来。
-
-### 代码实现
-
+接下来，我们来实现第二个功能：
 ```typescript
-abstract class Duck {
-  // protected name: string
-  constructor(protected name: string) {}
-
-  public display() {
-    console.log(`${this.name}: flying...`)
+  operate(start: number, end: number) {
+    const interval = end - start;
+    const LIMIT = 20;
+    if (interval <= LIMIT) { 
+      console.log(`${this.type} is running...`);
+    } else {
+      console.log(`Out of time...`);
+    }
   }
-  public swim() {
-    console.log(`${this.name}: swimming...`)
-  }
-}
-
-interface Flyable {
-  fly(): void
-}
-
-interface Quackable {
-  quack(): void
-}
-
-/**
- * 绿头野鸭
- */
-class MallardDuck extends Duck implements Flyable, Quackable {
-  constructor(name: string) {
-    super(name)
-  }
-
-  quack(): void {
-    console.log(`${this.name}: quacking...`)
-  }
-  fly(): void {
-    console.log(`${this.name}: flying...`)
-  }
-}
-
-class RedheadDuck extends Duck implements Flyable {
-  fly(): void {
-    console.log(`${this.name}: flying...`)
-  }
-}
 ```
 
-## 组合
-
-> 多用组合，少用继承。
-
-在讲组合之前，我们先考虑一下面向对象的基本特性之继承。
-
-### 继承
-
-来看下面的一个例子：我们已经设计处鸭子类（Duck），现在我们想让某些鸭子具有会飞的属性。
+下面就开启我们的出行之旅：
 
 ```typescript
-// 基类
-abstract class Duck {
-  abstract display(): void
-  abstract swim(): void
-}
-```
-
-我们可以通过继承来实现这个需求，只需要在基类（Duck）中，添加一个 `fly` 方法即可。
-
-```typescript
-abstract class Duck {
-  abstract display(): void
-  abstract swim(): void
-
-  // ⬇⬇⬇⬇⬇⬇⬇
-  abstract fly(): void
-}
-```
-
-### 组合
-除了使用继承实现之外，我们还可以使用组合进行实现。来看具体的代码：
-```typescript
-
-interface FlyBehavior {
-  fly(): void
-}
-
-abstract class Duck {
-  // ...
-  abstract swim(): void
-
-  protected flyBehavior!: FlyBehavior
-
-  fly() {
-    this.flyBehavior.fly()
-  }
-}
-```
-
-我们为 `Duck` 添加一个成员属性 `flyBehavior`，而具体的 `fly` 方法是通过调用 `flyBehavior.fly` 实现的。
-咋一看，这样做比单纯的继承要复杂的多。但是，这样的做的好处在于，`fly` 方法可以在**运行时**才确定的（当然，javascript 也可以在运行时修改 `fly` 方法）。而且，我们可以根据不同的**策略**，定制不同的 `fly` 方法。
-
-来看具体的代码：
-```typescript
-abstract class Duck {
-  // ...
-  setFlyBehavior(flyBehavior: FlyBehavior) {
-    this.flyBehavior = flyBehavior
-  }
-
-  getFlyBehavior(): FlyBehavior {
-    return this.flyBehavior
-  }
-}
-
-class RedheadDuck extends Duck {
-  display(): void {
-    console.log('RedheadDuck: displaying...')
-  }
-
-  swim(): void {
-    console.log('RedheadDuck: swimming...')
-  }
-}
-
-class FlyFastest implements FlyBehavior {
-  fly() {
-    console.log('fly fastest...')
-  }
-}
-
-class FlySlowest implements FlyBehavior {
-  fly() {
-    console.log('fly slowest...')
-  }
-}
-
-function test() {
-  const flyFast = new FlyFastest()
-  const flySlow = new FlySlowest()
+function main() {
+  const car   = new Vehicle('car');
+  const train = new Vehicle('train');
+  const plane = new Vehicle('plane');
   
-  const duck = new RedheadDuck(flyFast)
-  duck.fly()
-  duck.setFlyBehavior(flySlow)
-  duck.fly()
+  car.operate(0, 10);
+  train.operate(0, 10);
+  plane.operate(0, 10);
 }
-test()
+
+main();
 ```
 
-我们只需要为 Duck 类添加 getter 和 setter 就可以实现运行时调用不同的策略。
+从实现上面看，汽车 (car) 和火车 (train) 会跑，这显然没有问题。
+但是，飞机 (plane) 也会跑这显然就离谱了。
+其次就是每次我们修改 `LIMIT`，对所有的出行工具都有影响。
+但是，我们想对不同的工具进行不同的时间限制，如果从
+上面的代码进行修改，我们得使用到很多的 `if else` 判断
+才能实现。
 
-事实上，java bean 是组合原则的一个很好体现。
+显然，我们这样的设计是有缺陷的，也就是违反了**单一设计原则**。
 
+#### design pattern
+
+接下来，我们使用更好的设计（只是单纯演示，并没有使用具体的
+设计模式），来实现上面的功能。
+
+首先，我们通过类层面实现：
+```typescript
+abstract class Vehicle {
+  public type: string
+
+  constructor(type: string) {
+    this.type = type
+  }
+
+  abstract operate(start: number, end: number): void
+}
+
+class RunnableVehicle extends Vehicle {
+  operate(start: number, end: number): void {
+    const interval = end - start
+    if (interval <= 20) {
+      console.log(`${this.type} is running...`)
+    } else {
+      console.log(`out of time...`)
+    }
+  }
+}
+
+class SwimmableVehicle extends Vehicle {
+  operate(start: number, end: number): void {
+    const interval = end - start
+    if (interval <= 20) {
+      console.log(`${this.type} is swimming...`)
+    } else {
+      console.log(`out of time...`)
+    }
+  }
+}
+
+class FlyableVehicle extends Vehicle {
+  operate(start: number, end: number): void {
+    const interval = end - start
+    if (interval <= 20) {
+      console.log(`${this.type} is flying...`)
+    } else {
+      console.log(`out of time...`)
+    }
+  }
+}
+```
+
+我们将 `Vehicle` 类进行抽象，同时创建三个具体的类。
+每个类只负责单一的职责。通过这样的修改后，我们再去
+修改时间限制就不会影响到其他类了。
+
+接下来我们再从方法层面实现：
+```typescript
+class Vehicle {
+  public type: string;
+
+  constructor(type: string) {
+    this.type = type;
+  }
+
+  run(start: number, end: number) {
+    const interval = end - start
+    if (interval <= 20) {
+      console.log(`${this.type} is running...`)
+    } else {
+      console.log(`out of time...`)
+    }
+  }
+  
+  fly(start: number, end: number) {
+    const interval = end - start
+    if (interval <= 20) {
+      console.log(`${this.type} is flying...`)
+    } else {
+      console.log(`out of time...`)
+    }
+  }
+  
+  swim(start: number, end: number) {
+    const interval = end - start
+    if (interval <= 20) {
+      console.log(`${this.type} is swimming...`)
+    } else {
+      console.log(`out of time...`)
+    }
+  }
+}
+```
+
+#### comparison
+
+通过比较上面两种实现方式，我们可以更好地理解
+单一职责原则。利用这一原则，有利于我们后续对
+代码的修改和维护。
+
+### precautions
+
+单一职责原则要求我们：
+1. 降低类的复杂度，一个类只负责一项职责。
+2. 提高类的可读性、可维护性。
+3. 降低变化而引起的风险。
+4. 通常情况下，我们应当遵守单一职责原则。只有当
+   逻辑组够简单的时候，才可以在代码级违反单一职责原则。
+   只有类中方法数量组够少，才可以在方法层面上保持
+   单一职责原则。
+
+## 接口隔离原则
+
+## 依赖倒置原则
+
+## 里氏替换原则
+
+## 开放封闭原则（OCP）
+
+## 迪米特法则
+
+## 合成复用原则
