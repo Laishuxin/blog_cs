@@ -11,6 +11,7 @@ article: true
 sticky: false
 ---
 
+<center><img src="./images/design-pattern.jpg"></center>
 （本文是基于《Head First 设计模式》观察者模式的学习笔记）
 
 ## 引例：设计天气站

@@ -22,11 +22,11 @@ sticky: false
 
 ## 单一职责原则
 
-对于类而言，单一职责要求一个类只负责一项职责。
-如果类 A 负责两个不同的职责，如：职责 1 和职责 2。
-当职责 1 需求改变时改变类 A，可能会造成职责 2 执行错误，
-这种情况下就违法了单一职责原则。
-所以我们需要把类 A 的分解为 A1， A2，分别负责不同的职责。
+> 单一职责原则要求：对于类而言，单一职责要求一个类只负责一项职责。
+> 如果类 A 负责两个不同的职责，如：职责 1 和职责 2。
+> 当职责 1 需求改变时改变类 A，可能会造成职责 2 执行错误，
+> 这种情况下就违法了单一职责原则。
+> 所以我们需要把类 A 的分解为 A1， A2，分别负责不同的职责。
 
 对于函数也类似。
 
@@ -211,6 +211,99 @@ class Vehicle {
    单一职责原则。
 
 ## 接口隔离原则
+> 接口隔离原则要求：客户端不应该依赖它不需要的接口。即，
+> 一个类对另一个类的依赖应该建立在**最小**接口上的。
+
+要讲清楚其中的利弊，还是让我们通过一个简单的例子说明。
+
+### introduction
+![](./images/2021-06-15-13-04-34.png)
+
+现在我们有一个 `Enjoyable` 接口。分别有两种实现方式 `Senior` 和 `Advance`。
+
+我们的 `Boss` 通过 `Enjoyable` 接口，依赖了 `Advance` 中的 `dancing`, `massaging`, `sleeping` 三个方法。
+
+我们的 `Employee` 通过 `Enjoyable` 接口，依赖了 `Senior` 中的 `playing`, `sleeping`, `singing` 方法。
+
+### implementation
+
+#### tradition
+
+```typescript
+interface Enjoyable {
+  singing():void;
+  massaging():void;
+  dancing():void;
+  sleeping():void;
+  playing():void;
+}
+
+class Advance implements Enjoyable {
+  singing(): void {
+    console.log(`Advanced singing...`);
+  }
+  massaging(): void {
+    console.log(`Advanced massaging...`);
+  }
+  dancing(): void {
+    console.log(`Advanced dancing...`);
+  }
+
+  sleeping(): void {
+    console.log(`Advanced sleeping...`);
+  }
+  playing(): void {
+    console.log(`Advanced playing...`);
+  }
+}
+
+class Senior implements Enjoyable {
+  singing(): void {
+    console.log(`Senior singing...`);
+  }
+  massaging(): void {
+    console.log(`Senior massaging...`);
+  }
+  dancing(): void {
+    console.log(`Senior dancing...`);
+  }
+
+  sleeping(): void {
+    console.log(`Senior sleeping...`);
+  }
+  playing(): void {
+    console.log(`Senior playing...`);
+  }
+}
+
+class Boss {
+  enjoy(activities: Enjoyable) {
+    activities.dancing();
+    activities.massaging();
+    activities.sleeping();
+  }
+}
+
+class Employee {
+  enjoy(activities: Enjoyable) {
+    activities.playing();
+    activities.sleeping();
+    activities.singing();
+  }
+}
+```
+
+上面的实现方式存在一个问题。就是 `Boss` 和 `Employee` 依赖了多余的方法。
+对于 `Boss` 来讲，`Enjoyable` 中的 `playing` 和 `singing` 是用不到的。
+对于 `Employee` 来讲，`Enjoyable` 中的 `massaging` 和 `dancing` 是用不到的。
+
+这种实现方式违反了接口隔离原则。正确的做法是讲 `Enjoyable` 接口分割成几个接口，
+然后让实现类按需实现接口。
+
+
+#### design pattern
+
+### comparison
 
 ## 依赖倒置原则
 
