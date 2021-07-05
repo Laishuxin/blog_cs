@@ -101,6 +101,8 @@ dist
 .dynamodb/
 
 # TernJS port file
+.idea
+*.class
 .tern-port
 *.exe
 .vscode/launch.json
