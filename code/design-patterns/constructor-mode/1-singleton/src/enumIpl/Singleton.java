@@ -13,6 +13,5 @@ public enum Singleton {
     @Override
     public String toString() {
        return "A singleton";
-       Runtime
     }
 }
