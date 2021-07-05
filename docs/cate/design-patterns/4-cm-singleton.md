@@ -10,6 +10,8 @@ article: true
 sticky: false
 ---
 
+<center><img src="./images/design-pattern.jpg"></center>
+
 单例的核心原理是将类的创建构造器进行私有化，从而使外部无法创建类实例，
 类的实例由内部进行管理。
 

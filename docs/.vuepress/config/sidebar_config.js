@@ -31,6 +31,7 @@ function getDesignPatterns() {
 }
 
 function getFilesByName(path, prefix='./cate') {
+  prefix = resolve(basePath, prefix);
   return getFileNames(`${prefix}/${path}`);
 }
 
