@@ -15,6 +15,7 @@ sticky: false
 
 ## 引例
 
+
 ```typescript
 interface Movable {
   go(): void

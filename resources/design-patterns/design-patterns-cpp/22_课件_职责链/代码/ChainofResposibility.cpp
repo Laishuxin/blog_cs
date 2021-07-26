@@ -37,7 +37,9 @@ public:
     
    
     void handle(const Reqest & req)
-    {
+    enum RequestType {
+          
+    }{
         if (canHandleRequest(req))
             processRequest(req);
         else

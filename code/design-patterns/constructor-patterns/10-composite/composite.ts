@@ -167,6 +167,7 @@ function main() {
       const menu = it.next()
       menu?.print();
     }
+    
   } catch (e) {
     console.log('iterating: ', e);
   }
