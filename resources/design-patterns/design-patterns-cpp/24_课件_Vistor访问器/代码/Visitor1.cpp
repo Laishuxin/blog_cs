@@ -20,7 +20,7 @@ public:
     }
     
 
-};
+}
 
 class ElementB : public Element
 {
