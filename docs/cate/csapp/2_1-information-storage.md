@@ -185,6 +185,7 @@ book
    - CRC 循环冗余码。被除数 / 除数 = 商 $\cdots \cdots$ 余数。
 
 ### Boolean Algebra
+
 1. &
 2. |
 3. ~

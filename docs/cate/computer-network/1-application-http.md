@@ -86,10 +86,12 @@ URL 分为分为以下几个部分：
 #### 响应报文
 
 ![](./images/2021-06-27-13-45-16.png)
+
 <center>（图片来源：计算机网络 - 中科大 郑老师）</center>
 
 其中，响应状态行（response line）包含协议版本、响应 状态码和状态码信息。
 常见的响应状态有:
+
 - 200：OK。
 - 301：Moved Permanently。
 - 400：Bad Request。
@@ -99,7 +101,6 @@ URL 分为分为以下几个部分：
 - 408：Request Timeout。
 - 500：Internal Server Error。
 - 502：Bad Gateway。
-
 
 ### 非持久连接与持久连接
 
@@ -129,14 +130,16 @@ HTTP1.0 的时候采用的是非持久连接。也就是说，客户端每次向
 常见的维护客户端的状态有两种方式：cookie 和 token。
 
 #### cookie
-> HTTP Cookie（也叫 Web Cookie 或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie 使基于无状态的HTTP协议记录稳定的状态信息成为了可能。-- MDN:HTTP cookies
+
+> HTTP Cookie（也叫 Web Cookie 或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据，它会在浏览器下次向同一服务器再发起请求时被携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器，如保持用户的登录状态。Cookie 使基于无状态的 HTTP 协议记录稳定的状态信息成为了可能。-- MDN:HTTP cookies
 
 cookie 可以用来
+
 - 会话状态的管理（如：管理登录状态，购物车等）。
 - 个性化定制（如：用户主题定制等）。
 - 浏览器行为跟踪（如：跟踪和分析用户的行为）。
 
-事实上，cookie是一把双刃剑，在提供状态维持的同时，也暴露了一些
+事实上，cookie 是一把双刃剑，在提供状态维持的同时，也暴露了一些
 危险。例如：黑客可以通过 cookie 进行 [XSS 攻击](https://developer.mozilla.org/zh-CN/docs/Glossary/Cross-site_scripting)。
 
 为了避免遭受 XSS 攻击，可以在设置 cookie 的时候添加一个 `HttpOnly`，
@@ -167,6 +170,7 @@ Token 也可以用来维护客户端的状态。当客户端访问我们的
 是由 ISP（如：联通、移动、电信）安装。
 
 使用 代理服务器的好处在于：
+
 1. 降低客户端的请求响应时间。由于代理服务器通常是在本地局域网内，
    所以客户端访问代理服务器获取资源的速度要比直接到原始服务器上
    获取资源要快。
@@ -179,20 +183,22 @@ Token 也可以用来维护客户端的状态。当客户端访问我们的
 - [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 - [HttpOnly](https://owasp.org/www-community/HttpOnly)
 
-
 ## Appendix
+
 ### GET 与 POST 的区别
 
-GET: 
-+ GET请求可以被缓存
-+ GET请求可以保留在浏览器历史记录中
-+ GET请求可以被收藏为书签
-+ GET请求**不应该**在处理敏感数据是使用
-+ GET请求中URL有长度的限制
-+ GET请求最好用于取回数据
+GET:
 
-POST： 
-+ POST请求不会被缓存
-+ POST请求不会保留在浏览器历史记录中
-+ POST请求不能被收藏为书签
-+ POST请求数据的长度没有要求
+- GET 请求可以被缓存
+- GET 请求可以保留在浏览器历史记录中
+- GET 请求可以被收藏为书签
+- GET 请求**不应该**在处理敏感数据是使用
+- GET 请求中 URL 有长度的限制
+- GET 请求最好用于取回数据
+
+POST：
+
+- POST 请求不会被缓存
+- POST 请求不会保留在浏览器历史记录中
+- POST 请求不能被收藏为书签
+- POST 请求数据的长度没有要求

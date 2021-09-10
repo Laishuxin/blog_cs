@@ -1,9 +1,9 @@
 export {}
 class Vehicle {
-  public type: string;
+  public type: string
 
   constructor(type: string) {
-    this.type = type;
+    this.type = type
   }
 
   run(start: number, end: number) {
@@ -14,7 +14,7 @@ class Vehicle {
       console.log(`out of time...`)
     }
   }
-  
+
   fly(start: number, end: number) {
     const interval = end - start
     if (interval <= 20) {
@@ -23,7 +23,7 @@ class Vehicle {
       console.log(`out of time...`)
     }
   }
-  
+
   swim(start: number, end: number) {
     const interval = end - start
     if (interval <= 20) {

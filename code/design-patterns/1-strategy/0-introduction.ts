@@ -4,22 +4,22 @@ export {}
 const config1 = {
   method: 'get',
   data: {
-    a: 1
+    a: 1,
   },
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 }
 
 const config2 = {
   url: '/config/post',
   data: {
     a: 10,
-    b: 100
+    b: 100,
   },
   headers: {
-    Accept: 'application/json, text/plain, */*'
-  }
+    Accept: 'application/json, text/plain, */*',
+  },
 }
 
 interface Strategy {
@@ -52,11 +52,11 @@ const isPlainObject = (value: any) =>
  */
 const _deepMerge = (...values: any[]) => {
   const result = Object.create(null)
-  values.forEach((obj) => {
+  values.forEach(obj => {
     if (typeof obj === 'undefined' || obj === null) {
       return
     }
-    Object.keys(obj).forEach((key) => {
+    Object.keys(obj).forEach(key => {
       const value = obj[key]
       if (isPlainObject(value)) {
         result[key] = isPlainObject(result[key])
@@ -88,8 +88,8 @@ const fromValuesKeys = ['data', 'url']
 const deepMergeKeys = ['headers']
 // const defaultKeys: any[]
 
-fromValuesKeys.forEach((key) => (strategyMap[key] = fromValue2Strategy))
-deepMergeKeys.forEach((key) => (strategyMap[key] = deepMergeStrategy))
+fromValuesKeys.forEach(key => (strategyMap[key] = fromValue2Strategy))
+deepMergeKeys.forEach(key => (strategyMap[key] = deepMergeStrategy))
 
 // 3. 应用
 function merge(config1: any, config2: any) {

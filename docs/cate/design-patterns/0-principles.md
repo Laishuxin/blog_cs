@@ -44,30 +44,31 @@ sticky: false
 #### tradition
 
 我们先来实现第一个功能：
+
 ```typescript
 class Vehicle {
-  public type: string;
+  public type: string
 
   constructor(type: string) {
-    this.type = type;
+    this.type = type
   }
 
   operate() {
-    console.log(`${this.type} is running...`);
+    console.log(`${this.type} is running...`)
   }
 }
 ```
-
 
 从上面的例子上看，我们实现一个交通工具类 (`Vehicle`)，让
 它执行一个 `operate` 方法，来现象出行。
 
 接下来，我们来实现第二个功能：
+
 ```typescript
   operate(start: number, end: number) {
     const interval = end - start;
     const LIMIT = 20;
-    if (interval <= LIMIT) { 
+    if (interval <= LIMIT) {
       console.log(`${this.type} is running...`);
     } else {
       console.log(`Out of time...`);
@@ -79,16 +80,16 @@ class Vehicle {
 
 ```typescript
 function main() {
-  const car   = new Vehicle('car');
-  const train = new Vehicle('train');
-  const plane = new Vehicle('plane');
-  
-  car.operate(0, 10);
-  train.operate(0, 10);
-  plane.operate(0, 10);
+  const car = new Vehicle('car')
+  const train = new Vehicle('train')
+  const plane = new Vehicle('plane')
+
+  car.operate(0, 10)
+  train.operate(0, 10)
+  plane.operate(0, 10)
 }
 
-main();
+main()
 ```
 
 从实现上面看，汽车 (car) 和火车 (train) 会跑，这显然没有问题。
@@ -106,6 +107,7 @@ main();
 设计模式），来实现上面的功能。
 
 首先，我们通过类层面实现：
+
 ```typescript
 abstract class Vehicle {
   public type: string
@@ -156,12 +158,13 @@ class FlyableVehicle extends Vehicle {
 修改时间限制就不会影响到其他类了。
 
 接下来我们再从方法层面实现：
+
 ```typescript
 class Vehicle {
-  public type: string;
+  public type: string
 
   constructor(type: string) {
-    this.type = type;
+    this.type = type
   }
 
   run(start: number, end: number) {
@@ -172,7 +175,7 @@ class Vehicle {
       console.log(`out of time...`)
     }
   }
-  
+
   fly(start: number, end: number) {
     const interval = end - start
     if (interval <= 20) {
@@ -181,7 +184,7 @@ class Vehicle {
       console.log(`out of time...`)
     }
   }
-  
+
   swim(start: number, end: number) {
     const interval = end - start
     if (interval <= 20) {
@@ -202,6 +205,7 @@ class Vehicle {
 ### precautions
 
 单一职责原则要求我们：
+
 1. 降低类的复杂度，一个类只负责一项职责。
 2. 提高类的可读性、可维护性。
 3. 降低变化而引起的风险。
@@ -211,12 +215,14 @@ class Vehicle {
    单一职责原则。
 
 ## 接口隔离原则
+
 > 接口隔离原则要求：客户端不应该依赖它不需要的接口。即，
 > 一个类对另一个类的依赖应该建立在**最小**接口上的。
 
 要讲清楚其中的利弊，还是让我们通过一个简单的例子说明。
 
 ### introduction
+
 ![](./images/2021-06-15-13-04-34.png)
 
 现在我们有一个 `Enjoyable` 接口。分别有两种实现方式 `Senior` 和 `Advance`。
@@ -231,64 +237,64 @@ class Vehicle {
 
 ```typescript
 interface Enjoyable {
-  singing():void;
-  massaging():void;
-  dancing():void;
-  sleeping():void;
-  playing():void;
+  singing(): void
+  massaging(): void
+  dancing(): void
+  sleeping(): void
+  playing(): void
 }
 
 class Advance implements Enjoyable {
   singing(): void {
-    console.log(`Advanced singing...`);
+    console.log(`Advanced singing...`)
   }
   massaging(): void {
-    console.log(`Advanced massaging...`);
+    console.log(`Advanced massaging...`)
   }
   dancing(): void {
-    console.log(`Advanced dancing...`);
+    console.log(`Advanced dancing...`)
   }
 
   sleeping(): void {
-    console.log(`Advanced sleeping...`);
+    console.log(`Advanced sleeping...`)
   }
   playing(): void {
-    console.log(`Advanced playing...`);
+    console.log(`Advanced playing...`)
   }
 }
 
 class Senior implements Enjoyable {
   singing(): void {
-    console.log(`Senior singing...`);
+    console.log(`Senior singing...`)
   }
   massaging(): void {
-    console.log(`Senior massaging...`);
+    console.log(`Senior massaging...`)
   }
   dancing(): void {
-    console.log(`Senior dancing...`);
+    console.log(`Senior dancing...`)
   }
 
   sleeping(): void {
-    console.log(`Senior sleeping...`);
+    console.log(`Senior sleeping...`)
   }
   playing(): void {
-    console.log(`Senior playing...`);
+    console.log(`Senior playing...`)
   }
 }
 
 class Boss {
   enjoy(activities: Enjoyable) {
-    activities.dancing();
-    activities.massaging();
-    activities.sleeping();
+    activities.dancing()
+    activities.massaging()
+    activities.sleeping()
   }
 }
 
 class Employee {
   enjoy(activities: Enjoyable) {
-    activities.playing();
-    activities.sleeping();
-    activities.singing();
+    activities.playing()
+    activities.sleeping()
+    activities.singing()
   }
 }
 ```
@@ -300,7 +306,6 @@ class Employee {
 这种实现方式违反了接口隔离原则。正确的做法是讲 `Enjoyable` 接口分割成几个接口，
 然后让实现类按需实现接口。
 
-
 #### design pattern
 
 为了解决上面的问题，我们需要将 `Enjoyable` 这个范围太大的接口拆分成若干个小的接口。
@@ -308,17 +313,17 @@ class Employee {
 
 ```typescript
 interface CommonEnjoyable {
-  sleeping():void;
+  sleeping(): void
 }
 
 interface AdvancedEnjoyable extends CommonEnjoyable {
-  massaging(): void;
-  dancing  (): void;
+  massaging(): void
+  dancing(): void
 }
 
 interface SeniorEnjoyable extends CommonEnjoyable {
-  playing(): void;
-  singing(): void;
+  playing(): void
+  singing(): void
 }
 ```
 
@@ -339,13 +344,13 @@ interface SeniorEnjoyable extends CommonEnjoyable {
 ```typescript
 class Email {
   getMessage() {
-    return 'hello person';
+    return 'hello person'
   }
 }
 
 class Person {
   receive(email: Email) {
-    console.log('receive message: ', email.getMessage());
+    console.log('receive message: ', email.getMessage())
   }
 }
 ```
@@ -360,33 +365,33 @@ class Person {
 
 ```typescript
 interface IReceive {
-  getMessage(message: Message): void;
+  getMessage(message: Message): void
 }
 
 interface IMessage {
-  getMessage(): string;
+  getMessage(): string
 }
 
 class Person implements IReceive {
   getMessage(message: IMessage): void {
-    console.log('receive message: ', message.getMessage());
+    console.log('receive message: ', message.getMessage())
   }
 }
 
 class Email implements IMessage {
   getMessage(): string {
-    return 'email message';
+    return 'email message'
   }
 }
 
 class WeiChat implements IMessage {
-  getMessage(): string  {
-    return 'wechat message';
+  getMessage(): string {
+    return 'wechat message'
   }
 }
 ```
 
-我们创建两个接口 `IReceive` 和  `IMessage` 对原先的具体类
+我们创建两个接口 `IReceive` 和 `IMessage` 对原先的具体类
 进行抽象，具体类实现抽象类，从而将依赖分离。
 那么为什么这个原则称之为**依赖倒置原则**呢？
 来看我们实现后的类图：
@@ -399,26 +404,26 @@ class WeiChat implements IMessage {
 影响到另一个类的实现。
 
 ### 实现依赖倒置的方式
+
 实现依赖倒置有三种方式：
+
 1. 使用接口代替具体类。
-    上面的例子就是基于这个方式实现的。
+   上面的例子就是基于这个方式实现的。
 2. 构造器方式实现。
 3. `setter` 实现。
-
 
 ```typescript
 // 构造函数实现。
 interface IReceiver {
-  receive(): void;
+  receive(): void
 }
 
 interface IMessage {
-  getMessage(): string;
+  getMessage(): string
 }
 
 class Person implements IReceiver {
-  constructor(private message: IMessage) {
-  }
+  constructor(private message: IMessage) {}
 
   receive(): void {
     console.log('receive message: ', this.message.getMessage())
@@ -428,22 +433,22 @@ class Person implements IReceiver {
 
 ```typescript
 interface IReceiver {
-  setMessage(message: IMessage): void;
-  receive(): void;
+  setMessage(message: IMessage): void
+  receive(): void
 }
 
 interface IMessage {
-  getMessage(): string;
+  getMessage(): string
 }
 
 class Person implements IReceiver {
-  private message!: IMessage;
+  private message!: IMessage
   setMessage(message: IMessage): void {
     this.message = message
   }
 
   receive(): void {
-    if (!this.message) return;
+    if (!this.message) return
     console.log('receive message: ', this.message.getMessage())
   }
 }
@@ -474,63 +479,66 @@ class Person implements IReceiver {
 ### 示例
 
 在使用开闭原则之前，让我们来看一个错误的示范：
+
 ```typescript
 enum ShapeType {
   circle,
   triangle,
   rectangle,
-};
+}
 
 abstract class Shape {
   // constructor(protected type: ShapeType) {}
-  protected _type!: ShapeType;
-  
-  get type() {return this._type}
+  protected _type!: ShapeType
+
+  get type() {
+    return this._type
+  }
 }
 
 class Triangle extends Shape {
   constructor() {
-    super();
+    super()
     this._type = ShapeType.triangle
   }
 }
 
 class Rectangle extends Shape {
   constructor() {
-    super();
-    this._type = ShapeType.triangle;
+    super()
+    this._type = ShapeType.triangle
   }
 }
 
 class Circle extends Shape {
   constructor() {
-    super();
-    this._type = ShapeType.circle;
+    super()
+    this._type = ShapeType.circle
   }
 }
 
 class Graph {
   constructor(private shape: Shape) {}
-  
+
   draw() {
-    const type = this.shape.type;
+    const type = this.shape.type
     if (type === ShapeType.circle) {
-      this.drawCircle();
+      this.drawCircle()
     } else if (type === ShapeType.rectangle) {
-      this.drawRectangle();
+      this.drawRectangle()
     } else if (type === ShapeType.triangle) {
-      this.drawTriangle();
+      this.drawTriangle()
     }
   }
-  
+
   drawCircle() {
-    console.log('drawing a circle...');
+    console.log('drawing a circle...')
   }
   drawTriangle() {
-    console.log('drawing a triangle...');
+    console.log('drawing a triangle...')
   }
   drawRectangle() {
-    console.log('drawing a rectangle...');
+    console.log('drawing a rectangle...')
   }
 }
 ```
@@ -549,47 +557,49 @@ class Graph {
 ```typescript
 abstract class Shape {
   // constructor(protected type: ShapeType) {}
-  protected _type!: ShapeType;
-  get type() {return this._type}
-  abstract draw():  void;
+  protected _type!: ShapeType
+  get type() {
+    return this._type
+  }
+  abstract draw(): void
 }
 
 class Circle extends Shape {
   constructor() {
-    super();
-    this._type = ShapeType.circle;
+    super()
+    this._type = ShapeType.circle
   }
 
   draw(): void {
-    console.log('drawing a circle...');
+    console.log('drawing a circle...')
   }
 }
 class Rectangle extends Shape {
   constructor() {
-    super();
-    this._type = ShapeType.rectangle;
+    super()
+    this._type = ShapeType.rectangle
   }
 
   draw(): void {
-    console.log('drawing a rectangle...');
+    console.log('drawing a rectangle...')
   }
 }
 
 class Triangle extends Shape {
   constructor() {
-    super();
-    this._type = ShapeType.triangle;
+    super()
+    this._type = ShapeType.triangle
   }
 
   draw(): void {
-    console.log('drawing a triangle...');
+    console.log('drawing a triangle...')
   }
 }
 
 class Graph {
   constructor(private shape: Shape) {}
   draw(): void {
-    this.shape.draw();
+    this.shape.draw()
   }
 }
 ```
@@ -598,7 +608,7 @@ class Graph {
 绘制方法。自己在继承 `Shape` 后定制化 `draw` 方法就能实现不同的
 绘制方法。
 
-这样一来，我们在 `Graph` 的 `draw` 中，只需要调用 `shape` 的 `draw` 
+这样一来，我们在 `Graph` 的 `draw` 中，只需要调用 `shape` 的 `draw`
 方法即可。通过的实现方式，我们可以看到代码中的分支语句被删除了，
 同时，如果我们有新的类型需要增加的化，我们不用再修改 `Graph` 中的代码，
 也就是说**对于使用一方实现了修改关闭**，同时对于提供一方（`Shape`）
@@ -620,13 +630,13 @@ class A {}
 
 class B {
   // 直接朋友。
-  private friend: A;
-  m(friend: A):void {}
-  m2(): A{ }
-  
+  private friend: A
+  m(friend: A): void {}
+  m2(): A {}
+
   // 非直接朋友。
   m3() {
-    let a: A;  // 陌生类以局部变量的方式出现。
+    let a: A // 陌生类以局部变量的方式出现。
   }
 }
 ```
@@ -638,17 +648,22 @@ class B {
 然后学校 `SchoolManager` 中展示学校所有的员工（包括学校总部和下属学校的员工）。
 
 错误示范：
+
 ```typescript
 /**
  * 学校总部员工。
  */
 class SchoolEmployee {
   constructor(private id: number) {}
-  getId() { return this.id; }
-  setId(id: number) { this.id = id; }
-  
+  getId() {
+    return this.id
+  }
+  setId(id: number) {
+    this.id = id
+  }
+
   toString() {
-    return `学校员工${this.id}`;
+    return `学校员工${this.id}`
   }
 }
 
@@ -657,10 +672,14 @@ class SchoolEmployee {
  */
 class SubSchoolEmployee {
   constructor(private id: number) {}
-  getId() { return this.id; }
-  setId(id: number) { this.id = id; }
+  getId() {
+    return this.id
+  }
+  setId(id: number) {
+    this.id = id
+  }
   toString() {
-    return `下属学校员工${this.id}`;
+    return `下属学校员工${this.id}`
   }
 }
 
@@ -668,19 +687,19 @@ class SubSchoolEmployee {
  * 下属学校管理。
  */
 class SubSchoolManager {
-  private employees: SubSchoolEmployee[] = [];
+  private employees: SubSchoolEmployee[] = []
   constructor() {
     for (let i = 0; i < 5; i++) {
       this.employees.push(new SubSchoolEmployee(i))
     }
   }
   getEmployees() {
-    return this.employees;
+    return this.employees
   }
 }
 
 class SchoolManager {
-  private employees: SchoolEmployee[] = [];
+  private employees: SchoolEmployee[] = []
   constructor() {
     for (let i = 0; i < 10; i++) {
       this.employees.push(new SchoolEmployee(i))
@@ -691,16 +710,16 @@ class SchoolManager {
    * 获取学校总部员工。
    */
   getEmployees() {
-    return this.employees;
+    return this.employees
   }
-  
+
   /**
    * 展示所有的员工信息，包括学校总部和下属学校的员工信息。
    */
   showAllEmployees() {
-    const subSchoolManager = new SubSchoolManager();
-    console.log('学校总部员工：', this.getEmployees().toString());
-    console.log('下属学校员工：', subSchoolManager.getEmployees().toString());
+    const subSchoolManager = new SubSchoolManager()
+    console.log('学校总部员工：', this.getEmployees().toString())
+    console.log('下属学校员工：', subSchoolManager.getEmployees().toString())
   }
 }
 ```
@@ -721,17 +740,17 @@ class SchoolManager {
  */
 class SubSchoolManager {
   // ...
-    
+
   showEmployees() {
-    console.log('下属学校员工：', this.employees.toString());
+    console.log('下属学校员工：', this.employees.toString())
   }
 }
 
 class SchoolManager {
   // ...
   showAllEmployees(subSchoolManager: SubSchoolManager) {
-    console.log('学校总部员工：', this.getEmployees().toString());
-    subSchoolManager.showEmployees();
+    console.log('学校总部员工：', this.getEmployees().toString())
+    subSchoolManager.showEmployees()
   }
 }
 ```

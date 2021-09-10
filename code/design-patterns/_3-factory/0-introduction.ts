@@ -1,42 +1,42 @@
 interface Color {
-  render (): void;
+  render(): void
 }
 
 class Red implements Color {
   render(): void {
-    console.log('rendering red...');
+    console.log('rendering red...')
   }
 }
 
 class Green implements Color {
   render(): void {
-    console.log('rendering green...');
+    console.log('rendering green...')
   }
 }
 
 class Yellow implements Color {
   render(): void {
-    console.log('rendering yellow...');
+    console.log('rendering yellow...')
   }
 }
 
-function main (type: string) {
-  let color: Color;
+function main(type: string) {
+  let color: Color
   switch (type) {
     case 'red':
-      color = new Red();
-      break;
+      color = new Red()
+      break
     case 'green':
-      color = new Green();
-      break;
+      color = new Green()
+      break
     case 'yellow':
-      color = new Yellow();
-      break;
+      color = new Yellow()
+      break
     default:
-      throw new TypeError(`${type} color not exists.`);
+      throw new TypeError(`${type} color not exists.`)
   }
-  color.render();
+  color.render()
 }
 
-main('yellow');
+main('yellow')
 // rendering yellow...

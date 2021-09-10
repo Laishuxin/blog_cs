@@ -156,7 +156,7 @@ class ConcreteSubject implements Subject {
   }
 
   notifyObservers(): void {
-    this.observers.forEach((observer) => observer.update())
+    this.observers.forEach(observer => observer.update())
   }
 
   getState(): number {
@@ -285,8 +285,8 @@ class WeatherData implements Subject {
   }
 
   notifyObservers(): void {
-    this._observers.forEach((observer) =>
-      observer.update(this._temperature, this._humidity, this._pressure)
+    this._observers.forEach(observer =>
+      observer.update(this._temperature, this._humidity, this._pressure),
     )
   }
 }
@@ -315,7 +315,7 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
       typeof this._humidity !== 'undefined'
     ) {
       console.log(
-        `Current conditions: ${this._temperature}F degrees and ${this._humidity}% humidity`
+        `Current conditions: ${this._temperature}F degrees and ${this._humidity}% humidity`,
       )
     }
   }
@@ -353,8 +353,8 @@ class StatisticsDisplay implements Observer, DisplayElement {
 
     console.log(
       `Avg/Max/Min temperature = ${avg.toFixed(2)}/${min.toFixed(
-        2
-      )}/${max.toFixed(2)}`
+        2,
+      )}/${max.toFixed(2)}`,
     )
   }
 
@@ -536,7 +536,7 @@ export function defineReactive(data, key, value) {
       // newValue 可能是一个对象
       observe(newValue)
       dep.notifySubscribers()
-    }
+    },
   })
 }
 ```
@@ -623,7 +623,7 @@ export class Dep {
    * 通知观察者。
    */
   notifySubscribers() {
-    this.subscribers.forEach((watcher) => {
+    this.subscribers.forEach(watcher => {
       watcher.update()
     })
   }

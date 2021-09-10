@@ -1,5 +1,5 @@
 export interface Movable {
-  go(): void;
+  go(): void
 }
 
 export enum Status {

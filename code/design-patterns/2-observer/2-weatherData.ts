@@ -59,8 +59,8 @@ class WeatherData implements Subject {
   }
 
   notifyObservers(): void {
-    this._observers.forEach((observer) =>
-      observer.update(this._temperature, this._humidity, this._pressure)
+    this._observers.forEach(observer =>
+      observer.update(this._temperature, this._humidity, this._pressure),
     )
   }
 }
@@ -84,7 +84,7 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
       typeof this._humidity !== 'undefined'
     ) {
       console.log(
-        `Current conditions: ${this._temperature}F degrees and ${this._humidity}% humidity`
+        `Current conditions: ${this._temperature}F degrees and ${this._humidity}% humidity`,
       )
     }
   }
@@ -122,8 +122,8 @@ class StatisticsDisplay implements Observer, DisplayElement {
 
     console.log(
       `Avg/Max/Min temperature = ${avg.toFixed(2)}/${min.toFixed(
-        2
-      )}/${max.toFixed(2)}`
+        2,
+      )}/${max.toFixed(2)}`,
     )
   }
 

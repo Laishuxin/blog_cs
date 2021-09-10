@@ -1,14 +1,11 @@
 interface IIterator<T = any> {
-  hasNext(): boolean;
-  next(): T | null;
-  remove(): void;
+  hasNext(): boolean
+  next(): T | null
+  remove(): void
 }
 
 interface IIterable<T = any> {
-  createIterator(): IIterator<T>;
+  createIterator(): IIterator<T>
 }
 
-export {
-  IIterator,
-  IIterable,
-}
+export { IIterator, IIterable }

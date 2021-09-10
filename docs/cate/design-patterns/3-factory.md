@@ -10,7 +10,7 @@ article: true
 sticky: false
 ---
 
-## introduction 
+## introduction
 
 从一个简单的案例开启我们的工厂模式。
 
@@ -18,6 +18,7 @@ sticky: false
 我们新开了一个 Pizza 商店，为了便于 Pizza 种类的扩展和维护，我们需要自行设计其功能。
 
 要求如下：
+
 1. 披萨的种类很多。例如：GreekPizza，CheesePizza。
 2. 披萨的制作要有 prepare, bake, cut, box 四个步骤。其中 prepare 的材料可能不同，其他的步骤基本一致。
 3. 完成 Pizza 店的订购功能。
@@ -30,6 +31,7 @@ sticky: false
 方法即可。最后，我们再创建一个 `Order` 类，用于派发订单。
 
 具体的代码实现如下：
+
 ```javascript
 // common.ts
 export abstract class Pizza {
@@ -40,15 +42,15 @@ export abstract class Pizza {
   public bake(): void {
     console.log(`${this.name} pizza is baking...`);
   }
-  
+
   public cut(): void {
     console.log(`${this.name} pizza is cutting...`);
   }
-  
+
   public box() : void {
     console.log(`${this.name} pizza is boxing...`);
   }
-  
+
   public toString() : string {
     return `${this.name}Pizza`;
   }
@@ -124,51 +126,52 @@ function main() {
 
 从上面的图我们可以看到，我们将创建 Pizza 的方法由一个 SimpleFactory 管理，
 而我们的 PizzaStore 只需要管理自身 orderPizza 方法。这种实现方式便于后续
-的管理，也就是说，当我们创建一个新的 Store 的话，我们可以复用 PizzaStore 
+的管理，也就是说，当我们创建一个新的 Store 的话，我们可以复用 PizzaStore
 中的代码。
 
 具体实现代码如下：
+
 ```typescript
-import { CheesePizza, GreekPizza, Pizza } from "./common";
+import { CheesePizza, GreekPizza, Pizza } from './common'
 
 class SimpleFactory {
   createPizza(type: string): Pizza | null {
-    let pizza: Pizza | null = null;
-    type = type.toLowerCase();
+    let pizza: Pizza | null = null
+    type = type.toLowerCase()
 
     switch (type) {
       case 'cheese':
-        pizza = new CheesePizza();
-        break;
+        pizza = new CheesePizza()
+        break
       case 'greek':
-        pizza = new GreekPizza();
-        break;
+        pizza = new GreekPizza()
+        break
       default:
-        break;
+        break
     }
-    return pizza;
+    return pizza
   }
 }
 
 class PizzaStore {
   constructor(private factory: SimpleFactory) {}
-  
+
   public orderPizza(type: string): Pizza | null {
-    const pizza = this.factory.createPizza(type);
-    if (!pizza) return null;
-    pizza.prepare();
-    pizza.bake();
-    pizza.cut();
-    pizza.box();
-    return pizza;
+    const pizza = this.factory.createPizza(type)
+    if (!pizza) return null
+    pizza.prepare()
+    pizza.bake()
+    pizza.cut()
+    pizza.box()
+    return pizza
   }
 }
 
 function main() {
-  new PizzaStore(new SimpleFactory()).orderPizza('cheese');
+  new PizzaStore(new SimpleFactory()).orderPizza('cheese')
 }
 
-main();
+main()
 ```
 
 > 简单工厂模式：定义了一个创建对象的类，由这个类来封装实例化对象的行为代码。
@@ -213,19 +216,20 @@ class SimpleFactory {
 > 的实例化推迟到其子类中。
 
 下面是我们的抽象工厂的实现：
+
 ```typescript
 abstract class PizzaStore {
   public orderPizza(type: string): Pizza | null {
-    const pizza = this.createPizza(type);
-    if (!pizza) return null;
-    pizza.prepare();
-    pizza.bake();
-    pizza.cut();
-    pizza.box();
-    return pizza;
+    const pizza = this.createPizza(type)
+    if (!pizza) return null
+    pizza.prepare()
+    pizza.bake()
+    pizza.cut()
+    pizza.box()
+    return pizza
   }
 
-  protected abstract createPizza(type: string): Pizza | null;
+  protected abstract createPizza(type: string): Pizza | null
 }
 ```
 
@@ -234,39 +238,39 @@ abstract class PizzaStore {
 ```typescript
 class NewYorkPizzaStore extends PizzaStore {
   protected createPizza(type: string): Pizza | null {
-    let pizza: Pizza | null = null;
-    type = type.toLowerCase();
+    let pizza: Pizza | null = null
+    type = type.toLowerCase()
 
     switch (type) {
       case 'cheese':
-        pizza = new NewYorkCheesePizza();
-        break;
+        pizza = new NewYorkCheesePizza()
+        break
       case 'greek':
-        pizza = new NewYorkGreekPizza();
-        break;
+        pizza = new NewYorkGreekPizza()
+        break
       default:
-        break;
+        break
     }
-    return pizza;
+    return pizza
   }
 }
 
 class ChicagoPizzaStore extends PizzaStore {
   protected createPizza(type: string): Pizza | null {
-    let pizza: Pizza | null = null;
-    type = type.toLowerCase();
+    let pizza: Pizza | null = null
+    type = type.toLowerCase()
 
     switch (type) {
       case 'cheese':
-        pizza = new ChicagoCheesePizza();
-        break;
+        pizza = new ChicagoCheesePizza()
+        break
       case 'greek':
-        pizza = new ChicagoGreekPizza();
-        break;
+        pizza = new ChicagoGreekPizza()
+        break
       default:
-        break;
+        break
     }
-    return pizza;
+    return pizza
   }
 }
 ```
@@ -277,6 +281,7 @@ class ChicagoPizzaStore extends PizzaStore {
 ![](./images/2021-07-05-14-36-52.png)
 
 ## 抽象工厂
+
 所谓抽象工厂，是定义了一个 interface 用于创建有相关依赖或依赖关系的对象簇，
 而无需指明具体的类。
 
@@ -290,22 +295,23 @@ AbstractFactory 和 ConcreteFactory，程序员可以根据创建对象类型使
 AbstractFactory 定义出一系列的工厂簇，然后将具体的工厂聚合到 PizzaStore 中即可。
 
 代码和上面工厂方法类似，这里只展示了 `PizzaStore` 的具体实现：
+
 ```typescript
 class PizzaStore {
-  private factory!: AbstractFactory;
-  
+  private factory!: AbstractFactory
+
   setFactory(factory: AbstractFactory) {
-    this.factory = factory;
+    this.factory = factory
   }
 
   orderPizza(type: string) {
-    const pizza = this.factory.createPizza(type);
-    if (!pizza) return null;
-    pizza.prepare();
-    pizza.bake();
-    pizza.cut();
-    pizza.box();
-    return pizza;
+    const pizza = this.factory.createPizza(type)
+    if (!pizza) return null
+    pizza.prepare()
+    pizza.bake()
+    pizza.cut()
+    pizza.box()
+    return pizza
   }
 }
 ```
@@ -314,4 +320,3 @@ class PizzaStore {
 去创建。
 
 <!-- ## 应用 -->
-

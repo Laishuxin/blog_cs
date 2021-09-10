@@ -1,5 +1,3 @@
-import { IStatusFactory } from "./typing";
+import { IStatusFactory } from './typing'
 
-export default class StatusFactory implements IStatusFactory {
-  
-}
+export default class StatusFactory implements IStatusFactory {}

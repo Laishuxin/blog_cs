@@ -32,7 +32,7 @@ class ConcreteSubject implements Subject {
   }
 
   notifyObservers(): void {
-    this.observers.forEach((observer) => observer.update())
+    this.observers.forEach(observer => observer.update())
   }
 
   getState(): number {

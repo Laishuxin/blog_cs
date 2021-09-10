@@ -12,6 +12,7 @@ sticky: false
 ---
 
 <!-- ## Introduction -->
+
 ## 工作原理
 
 适配器可以作为一个中间套件，连接两个不同的外观但功能相似的物品。
@@ -23,7 +24,7 @@ sticky: false
 
 还有一种适配器就是三插头转二插头的充电头：
 
-![](./images/2021-07-07-23-53-09.png) 
+![](./images/2021-07-07-23-53-09.png)
 
 适配器的原理和我们日常的转接口类似。
 
@@ -31,6 +32,7 @@ sticky: false
 > 接口 表示，主要目的是兼容性，让原本因不匹配而不能工作的两个类可以协同工作。
 
 适配器模式主要分为三类：
+
 1. 类适配器
 2. 对象适配器
 3. 接口适配器
@@ -55,43 +57,44 @@ sticky: false
 
 ```typescript
 interface IVoltage5 {
-  output5(): number;
+  output5(): number
 }
 
 class Voltage220 {
   public output220(): number {
-    console.log('输出 220V');
-    return 220;
+    console.log('输出 220V')
+    return 220
   }
 }
 
 class Adapter extends Voltage220 implements IVoltage5 {
   output5() {
-    const output220 = super.output220();
-    console.log('输出 5V');
-    return output220 / 44;
+    const output220 = super.output220()
+    console.log('输出 5V')
+    return output220 / 44
   }
 }
 
 class Phone {
   charging(adapter: Adapter): void {
-    const voltage = adapter.output5();
+    const voltage = adapter.output5()
     if (voltage > 5 || voltage <= 0) {
-      throw new Error('invalid voltage');
+      throw new Error('invalid voltage')
     }
-    console.log('给手机充电...');
-    console.log(`当前输入电压为：${voltage}V`);
+    console.log('给手机充电...')
+    console.log(`当前输入电压为：${voltage}V`)
   }
 }
 
 function main() {
-  const adapter = new Adapter();
-  const phone = new Phone();
-  phone.charging(adapter);
+  const adapter = new Adapter()
+  const phone = new Phone()
+  phone.charging(adapter)
 }
 ```
 
 ## 对象设配器
+
 对象适配器与类适配器原理相同，只是将继承该成聚合实现适配。
 来看具体的 UML 图：
 
@@ -102,51 +105,52 @@ function main() {
 这样做的好处在于降低了代码的耦合性。
 
 具体实现如下：
+
 ```typescript
 interface IVoltage5 {
-  output5(): number;
+  output5(): number
 }
 
 class Voltage220 {
   public output220(): number {
-    console.log('输出 220V');
-    return 220;
+    console.log('输出 220V')
+    return 220
   }
 }
 
 class Adapter implements IVoltage5 {
-  private voltage!: Voltage220;
-  
+  private voltage!: Voltage220
+
   public setVoltage(voltage: Voltage220) {
-    this.voltage = voltage;
+    this.voltage = voltage
   }
 
   output5() {
     if (!this.voltage) {
-      throw new Error('input error: without voltage');
+      throw new Error('input error: without voltage')
     }
-    const output220 = this.voltage.output220();
-    console.log('输出 5V');
-    return output220 / 44;
+    const output220 = this.voltage.output220()
+    console.log('输出 5V')
+    return output220 / 44
   }
 }
 
 class Phone {
   charging(adapter: Adapter): void {
-    const voltage = adapter.output5();
+    const voltage = adapter.output5()
     if (voltage > 5 || voltage <= 0) {
-      throw new Error('invalid voltage');
+      throw new Error('invalid voltage')
     }
-    console.log('给手机充电...');
-    console.log(`当前输入电压为：${voltage}V`);
+    console.log('给手机充电...')
+    console.log(`当前输入电压为：${voltage}V`)
   }
 }
 
 function main() {
-  const adapter = new Adapter();
-  adapter.setVoltage(new Voltage220());
-  const phone = new Phone();
-  phone.charging(adapter);
+  const adapter = new Adapter()
+  adapter.setVoltage(new Voltage220())
+  const phone = new Phone()
+  phone.charging(adapter)
 }
 ```
 
@@ -157,37 +161,35 @@ function main() {
 然后该抽象类的子类可以选择性地覆盖父类的某些方法实现需求。
 
 来看下面的代码：
+
 ```typescript
 interface IInterface {
-  method1(): void;
-  method2(): void;
-  method3(): void;
+  method1(): void
+  method2(): void
+  method3(): void
 }
 
 abstract class AClass implements IInterface {
-  method1(): void {
-  }
-  method2(): void {
-  }
-  method3(): void {
-  }
+  method1(): void {}
+  method2(): void {}
+  method3(): void {}
 }
 
 function useInterface(i: IInterface): void {
-  i.method1();
+  i.method1()
 }
 
 function main() {
-  const aClass = new class extends AClass {
+  const aClass = new (class extends AClass {
     method1() {
-      console.log('这是一个匿名类...');
+      console.log('这是一个匿名类...')
     }
-  }();
-  
-  useInterface(aClass);
+  })()
+
+  useInterface(aClass)
 }
 
-main();
+main()
 ```
 
 我们的程序需要依赖到 `IInterface` 接口，但是不需要使用到该接口中的所有
@@ -196,11 +198,12 @@ main();
 
 ## 应用实战
 
-SpringMVC 中也使用到该设计模式，其 UML t图如下：
+SpringMVC 中也使用到该设计模式，其 UML t 图如下：
 
 ![](./images/2021-07-08-16-06-10.png)
 
 核心方法是 `DispatchServlet` 中的 `doDispatch`，大致的运作流程为：
+
 1. 根据输入的 `request` 获取 相应的 `Controller`。
 2. 根据 `Controller` 获取支持该 `Controller` 的适配器。
 3. 调用适配器的 `handle` 方法（适配器又调用了 `Controller` 中不同的 `handle` 方法）。

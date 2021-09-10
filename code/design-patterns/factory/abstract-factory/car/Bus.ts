@@ -1,7 +1,7 @@
-import { Movable } from "../typings";
+import { Movable } from '../typings'
 
 export default class Bus implements Movable {
   go(): void {
-    console.log('bus is moving...');
+    console.log('bus is moving...')
   }
 }

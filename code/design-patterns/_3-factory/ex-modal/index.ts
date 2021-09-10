@@ -1,16 +1,16 @@
-import ModalFactory from "./ModalFactory";
-import StatusFactory from "./StatusFactory";
+import ModalFactory from './ModalFactory'
+import StatusFactory from './StatusFactory'
 
 const modal = document.querySelector('.modal')
 const btnGroup = document.querySelector('.btn-group')
-const statusFactory = new StatusFactory();
-const modalFactor = new ModalFactory(modal!, statusFactory);
+const statusFactory = new StatusFactory()
+const modalFactor = new ModalFactory(modal!, statusFactory)
 
 function init() {
   bindEvent()
 }
 
-init();
+init()
 
 /**
  * AddEventListener.
@@ -19,21 +19,20 @@ function addEvent(
   dom: Element,
   eventType: string,
   cb: any,
-  options: boolean = false
+  options: boolean = false,
 ) {
-  dom.addEventListener(eventType, cb, options);
+  dom.addEventListener(eventType, cb, options)
 }
 
 /** Bind event. */
 function bindEvent() {
-  addEvent(btnGroup!, 'click', handleBtnGroupClick);
+  addEvent(btnGroup!, 'click', handleBtnGroupClick)
 }
 
-
 function handleBtnGroupClick(event: any) {
-  const target = event.target;
-  
+  const target = event.target
+
   if (target.tagName.toUpperCase() === 'BUTTON') {
-    const status = target.dataset.status;
+    const status = target.dataset.status
   }
 }

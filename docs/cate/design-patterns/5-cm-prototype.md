@@ -158,7 +158,5 @@ protected Prototype clone() {
       e.printStackTrace();
   }
   return prototype;
-} 
+}
 ```
-
-

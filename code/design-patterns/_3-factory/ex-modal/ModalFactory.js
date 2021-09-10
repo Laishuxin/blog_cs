@@ -1,8 +1,7 @@
-"use strict";
-exports.__esModule = true;
+'use strict'
+exports.__esModule = true
 var ModalFactory = /** @class */ (function () {
-    function ModalFactory(dom, statusFactory) {
-    }
-    return ModalFactory;
-}());
-exports["default"] = ModalFactory;
+  function ModalFactory(dom, statusFactory) {}
+  return ModalFactory
+})()
+exports['default'] = ModalFactory

@@ -109,3 +109,4 @@ dist
 code/design-patterns/yarn.lock
 code/design-patterns/3-factory/**/*js
 _*
+.vscode

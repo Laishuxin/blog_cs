@@ -43,7 +43,7 @@ class FlyableVehicle extends Vehicle {
 }
 
 function main() {
-  const vehicle1: Vehicle   = new RunnableVehicle('car')
+  const vehicle1: Vehicle = new RunnableVehicle('car')
   const vehicle2: Vehicle = new SwimmableVehicle('train')
   const vehicle3: Vehicle = new FlyableVehicle('plane')
 

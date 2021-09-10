@@ -1,4 +1,3 @@
-import { Observer } from "./1-observer";
+import { Observer } from './1-observer'
 
-class ConcreteObserver implements Observer {
-}
+class ConcreteObserver implements Observer {}

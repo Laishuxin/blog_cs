@@ -1,23 +1,23 @@
 export {}
 interface Movable {
-  go(): void;
+  go(): void
 }
 
 class Car implements Movable {
   go(): void {
-    console.log('car is moving...');
+    console.log('car is moving...')
   }
 }
 
 class Plane implements Movable {
   go(): void {
-    console.log('plane is moving...');
+    console.log('plane is moving...')
   }
 }
 
 class Train implements Movable {
   go(): void {
-    console.log('train is moving...');
+    console.log('train is moving...')
   }
 }
 
@@ -35,24 +35,24 @@ enum MovableType {
 }
 
 function main(type: MovableType) {
-  let m: Movable;
+  let m: Movable
   switch (type) {
     case MovableType.car:
-      m = new Car();
-      break;
+      m = new Car()
+      break
     case MovableType.plane:
-      m = new Plane();
-      break;
+      m = new Plane()
+      break
     // case MovableType.train:
     //   m = new Train();
     //   break;
     case MovableType.highSpeedTrain:
-      m = new HighSpeedTrain();
-      break;
+      m = new HighSpeedTrain()
+      break
     default:
       throw new TypeError(`${type} is not movable...`)
   }
-  m.go();
+  m.go()
 }
 
-main(MovableType.car);
+main(MovableType.car)

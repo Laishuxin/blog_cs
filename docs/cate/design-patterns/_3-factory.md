@@ -15,7 +15,6 @@ sticky: false
 
 ## 引例
 
-
 ```typescript
 interface Movable {
   go(): void
@@ -42,7 +41,7 @@ class Train implements Movable {
 enum MovableType {
   car,
   plane,
-  train
+  train,
 }
 
 function main(type: MovableType) {
@@ -86,7 +85,7 @@ enum MovableType {
   plane,
   // ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇
   // train,
-  highSpeedTrain
+  highSpeedTrain,
 }
 
 function main(type: MovableType) {
@@ -209,7 +208,7 @@ export interface Movable {
 export enum Status {
   tight,
   rich,
-  wellOff
+  wellOff,
 }
 
 // ./index.ts
@@ -326,7 +325,7 @@ export default class Maserati implements Movable {
 export enum VehicleType {
   car,
   plane,
-  train
+  train,
 }
 
 // ./index.ts

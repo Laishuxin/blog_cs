@@ -4,6 +4,4 @@ const STATUS_TYPES = {
   ERROR: 'E',
 }
 
-export {
-  STATUS_TYPES,
-}
+export { STATUS_TYPES }

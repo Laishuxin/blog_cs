@@ -1,16 +1,15 @@
 export {}
 
 interface IReceiver {
-  receive(): void;
+  receive(): void
 }
 
 interface IMessage {
-  getMessage(): string;
+  getMessage(): string
 }
 
 class Person implements IReceiver {
-  constructor(private message: IMessage) {
-  }
+  constructor(private message: IMessage) {}
 
   receive(): void {
     console.log('receive message: ', this.message.getMessage())
@@ -19,12 +18,12 @@ class Person implements IReceiver {
 
 class Email implements IMessage {
   getMessage(): string {
-    return 'email message';
+    return 'email message'
   }
 }
 
 function main() {
-  new Person(new Email());
+  new Person(new Email())
 }
 
-main();
+main()

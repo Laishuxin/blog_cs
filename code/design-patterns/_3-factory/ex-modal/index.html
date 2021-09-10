@@ -1,48 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>工厂模式 - 模态框</title></title>
-  <style>
-    :root {
-      --modal-size: 500px;
-    }
-    .modal {
-      position: fixed;
-      left: 50%;
-      top: 50%;
-      width: var(--modal-size);
-      height: var(--modal-size);
-      transform: translate(-250px, -250px);
-      border: 1px solid #000000;
-      box-sizing: border-box;
-      box-shadow: 1px 3px 5px #999;
-    }
-    
-    .modal .title {
-      border-bottom: 1px solid #000000;
-      margin: 0;
-      padding: 10px;
-      box-sizing: border-box;
-    }
-    
-  </style>
-</head>
-<body>
-  <h1>实现不同状态的模态框</h1>
-  
-  <div class="btn-group">
-    <button data-status="S">success</button>
-    <button data-status="W">warning</button>
-    <button data-status="E">error</button>
-  </div>
-  
-  <div class="modal">
-    <h2 class="title">modal</h2>
-  </div>
-  
-  <script src="./index.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>工厂模式 - 模态框</title>
+    <style>
+      :root {
+        --modal-size: 500px;
+      }
+      .modal {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        width: var(--modal-size);
+        height: var(--modal-size);
+        transform: translate(-250px, -250px);
+        border: 1px solid #000000;
+        box-sizing: border-box;
+        box-shadow: 1px 3px 5px #999;
+      }
+
+      .modal .title {
+        border-bottom: 1px solid #000000;
+        margin: 0;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>实现不同状态的模态框</h1>
+
+    <div class="btn-group">
+      <button data-status="S">success</button>
+      <button data-status="W">warning</button>
+      <button data-status="E">error</button>
+    </div>
+
+    <div class="modal">
+      <h2 class="title">modal</h2>
+    </div>
+
+    <script src="./index.js"></script>
+  </body>
 </html>

@@ -20,52 +20,53 @@ sticky: false
 要求不相同。
 
 下面我们采用传统的方式实现这个构造房子的过程：
+
 ```typescript
 abstract class AbstractHouse {
-  public abstract buildBasic(): void;
-  public abstract buildWall(): void;
-  public abstract buildRoof(): void;
+  public abstract buildBasic(): void
+  public abstract buildWall(): void
+  public abstract buildRoof(): void
   public build(): void {
-    this.buildBasic();
-    this.buildWall();
-    this.buildRoof();
-    console.log('done');
+    this.buildBasic()
+    this.buildWall()
+    this.buildRoof()
+    console.log('done')
   }
 }
 
 class CommonHouse extends AbstractHouse {
   public buildBasic(): void {
-    console.log(`build basic of CommonHouse`);
+    console.log(`build basic of CommonHouse`)
   }
   public buildWall(): void {
-    console.log(`build wall of CommonHouse`);
+    console.log(`build wall of CommonHouse`)
   }
   public buildRoof(): void {
-    console.log(`build roof of CommonHouse`);
+    console.log(`build roof of CommonHouse`)
   }
 }
 
 class Villa extends AbstractHouse {
   public buildBasic(): void {
-    console.log(`build basic of Villa`);
+    console.log(`build basic of Villa`)
   }
   public buildWall(): void {
-    console.log(`build wall of Villa`);
+    console.log(`build wall of Villa`)
   }
   public buildRoof(): void {
-    console.log(`build roof of Villa`);
+    console.log(`build roof of Villa`)
   }
 }
 
 function main() {
-  const house: AbstractHouse = new Villa();
-  house.buildBasic();
-  house.buildWall();
-  house.buildRoof();
-  house.build();
+  const house: AbstractHouse = new Villa()
+  house.buildBasic()
+  house.buildWall()
+  house.buildRoof()
+  house.build()
 }
 
-main();
+main()
 ```
 
 为了更好地理解传统的实现方式，请看下面的类图：
@@ -93,74 +94,75 @@ main();
 ![](./images/2021-07-06-07-47-09.png)
 
 具体代码实现如下：
+
 ```typescript
 class House {
-  public basic: string | undefined;
-  public wall: string | undefined;
-  public roof: string | undefined;
+  public basic: string | undefined
+  public wall: string | undefined
+  public roof: string | undefined
   toString() {
-    return `basic: ${this.basic}, wall: ${this.wall}, roof: ${this. roof}`;
+    return `basic: ${this.basic}, wall: ${this.wall}, roof: ${this.roof}`
   }
 }
 
 abstract class HouseBuilder {
-  protected house: House = new House();
-  public abstract buildBasic(): void;
-  public abstract buildWall(): void;
-  public abstract buildRoof(): void;
-  
+  protected house: House = new House()
+  public abstract buildBasic(): void
+  public abstract buildWall(): void
+  public abstract buildRoof(): void
+
   public getHouse(): House {
-    return this.house;
+    return this.house
   }
 }
 
 class CommonHouseBuilder extends HouseBuilder {
   public buildBasic(): void {
-    this.house.basic = 'common house basic';
-    console.log('Building basic of common house');
+    this.house.basic = 'common house basic'
+    console.log('Building basic of common house')
   }
   public buildWall(): void {
-    this.house.wall = 'common house wall';
-    console.log('Building wall of common house');
+    this.house.wall = 'common house wall'
+    console.log('Building wall of common house')
   }
   public buildRoof(): void {
-    this.house.roof = 'common house roof';
-    console.log('Building roof of common house');
+    this.house.roof = 'common house roof'
+    console.log('Building roof of common house')
   }
 }
 
 class VillaHouseBuilder extends HouseBuilder {
   public buildBasic(): void {
-    this.house.basic = 'villa house basic';
-    console.log('Building basic of villa house');
+    this.house.basic = 'villa house basic'
+    console.log('Building basic of villa house')
   }
   public buildWall(): void {
-    this.house.wall = 'villa house wall';
-    console.log('Building wall of villa house');
+    this.house.wall = 'villa house wall'
+    console.log('Building wall of villa house')
   }
   public buildRoof(): void {
-    this.house.roof = 'villa house roof';
-    console.log('Building roof of villa house');
+    this.house.roof = 'villa house roof'
+    console.log('Building roof of villa house')
   }
 }
 
 class Director {
-  private houseBuilder: HouseBuilder | null = null;
-  
+  private houseBuilder: HouseBuilder | null = null
+
   public setHouseBuilder(houseBuilder: HouseBuilder) {
-    this.houseBuilder = houseBuilder;
+    this.houseBuilder = houseBuilder
   }
-  
+
   public getHouserBuilder(): HouseBuilder | null {
-    return this.houseBuilder;
+    return this.houseBuilder
   }
 
   public construct(): House {
-    if (this.houseBuilder === null) throw new Error("HouseBuilder is missing");
-    this.houseBuilder.buildBasic();
-    this.houseBuilder.buildWall();
-    this.houseBuilder.buildRoof();
-    return this.houseBuilder.getHouse();
+    if (this.houseBuilder === null) throw new Error('HouseBuilder is missing')
+    this.houseBuilder.buildBasic()
+    this.houseBuilder.buildWall()
+    this.houseBuilder.buildRoof()
+    return this.houseBuilder.getHouse()
   }
 }
 ```
@@ -168,17 +170,14 @@ class Director {
 使用过程如下，其核心是通过 Director 控制构建过程，实现解耦合：
 
 ```typescript
-const director = new Director();
-director.setHouseBuilder(new CommonHouseBuilder());
-let house = director.construct();
-console.log(`building common house: `, house.toString());
+const director = new Director()
+director.setHouseBuilder(new CommonHouseBuilder())
+let house = director.construct()
+console.log(`building common house: `, house.toString())
 
-director.setHouseBuilder(new VillaHouseBuilder());
-house = director.construct();
-console.log(`building villa house: `, house.toString());
+director.setHouseBuilder(new VillaHouseBuilder())
+house = director.construct()
+console.log(`building villa house: `, house.toString())
 ```
 
 ## 建造者模式与抽象工厂的区别
-
-
-
