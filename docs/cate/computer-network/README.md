@@ -1,5 +1,5 @@
 ---
-title: computer network
+title: 计算机网络
 time: 2021-06-27
 author: ru shui
 category: computer network
@@ -12,4 +12,4 @@ sticky: true
 
 ## content
 
-- [ application - http ](./1-application-http.md)
+- [ 计算机网络 - http ](./1-application-http.md)
