@@ -7,7 +7,7 @@ tag:
   - csapp
 visitor: false
 article: true
-sticky: true
+# sticky: true
 ---
 
 ## Part1: Program Structure and Execution

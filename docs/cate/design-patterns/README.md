@@ -8,7 +8,7 @@ tag:
   - design pattern
 visitor: false
 article: true
-sticky: true
+# sticky: true
 ---
 
 基于《Head First 设计模式》的学习笔记和心得。与书本不同的是，本系列是通过 typescript / java 实现书中的设计模式，具体使用哪一个

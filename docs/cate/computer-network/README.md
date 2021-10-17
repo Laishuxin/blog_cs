@@ -7,7 +7,7 @@ tag:
   - computer network
 visitor: false
 article: true
-sticky: true
+# sticky: true
 ---
 
 ## content
