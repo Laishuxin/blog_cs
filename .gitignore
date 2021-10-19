@@ -111,3 +111,4 @@ code/design-patterns/3-factory/**/*js
 _*
 .vscode
 .vscode/*
+scripts/_*

@@ -128,6 +128,57 @@ function binaryLower(arr, target, l, r) {
 }
 ```
 
+## 解题思路
+
+1. 确定区间。
+2. 使用代码框架。
+3. 确定 `check` 函数。
+4. 确定更新方式（上界 / 下界）。
+
+下面以 LeetCode [69. Sqrt(x)](https://leetcode-cn.com/problems/sqrtx/) 为例，对模板的使用：
+
+题目要求是实现一个 `sqrt` 然后要下取整，下面开始上述的步骤：
+
+1. 确定区间。显然题目的区间是 `[0, x]`。
+2. 代码框架。
+   ```c++
+   class Solution {
+   public:
+    int mySqrt(int x) {
+      int l = 0;
+      int r = x;
+      while (l < r) {
+        int mid = (l + r + ?) >> 1;  // ? = 0 / 1
+      }
+      return l;
+    }
+   };
+   ```
+3. 确定 `check` 函数。我们可以将区间 `[0, x]` 进行划分，左边红颜色的为 $[l, t^2 \le \lfloor x \rfloor]$，右边绿颜色的为 $[\lfloor x \rfloor + 1, r]$
+<div style="text-align: center;" class="awesome-img"><img src="./images/2021-10-19-19-47-21.png" alt="img" style="width:80%;"/></div>
+
+4. 确定更新方式。经过上述的分析，我们要的是红色的上界，所以 `mid = l + r + 1`。
+
+下面是完整的代码：
+
+```cpp
+class Solution {
+public:
+    int mySqrt(int x) {
+      int l = 0;
+      int r = x;
+      while (l < r) {
+        // 当 r = MAX_INT 的时候会发生上溢。
+        int mid = (l + (long long)r + 1) >> 1;
+        // 相当于 mid * mid < x，但这样可以避免上溢。
+        if (mid <= x / mid) l = mid;
+        else r = mid - 1;
+      }
+      return l;
+    }
+};
+```
+
 ## References
 
 -[常用代码模板 1——基础算法](https://www.acwing.com/blog/content/277/)
