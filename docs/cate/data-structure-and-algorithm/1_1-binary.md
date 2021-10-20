@@ -141,7 +141,7 @@ function binaryLower(arr, target, l, r) {
 
 1. 确定区间。显然题目的区间是 `[0, x]`。
 2. 代码框架。
-   ```c++
+   ```cpp
    class Solution {
    public:
     int mySqrt(int x) {
@@ -181,6 +181,6 @@ public:
 
 ## References
 
--[常用代码模板 1——基础算法](https://www.acwing.com/blog/content/277/)
+- [常用代码模板 1——基础算法](https://www.acwing.com/blog/content/277/)
 
 - [LeetCode 暑期刷题打卡 2019——Week1 二分专题](https://www.bilibili.com/video/BV1Ft41157zW?spm_id_from=333.999.0.0)
